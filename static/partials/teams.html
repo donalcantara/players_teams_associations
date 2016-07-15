@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row">
+      	<div class='col-md-8' ng-controller="view2Controller">
+	    	<div class="row">
+	      		<div ng-controller='teamsController'>
+	        		<h2>Teams</h2>
+	          		<form class="form-horizontal">
+	            		<div class="form-group">
+	              			<label class="control-label">Team:</label>
+							<input type="text" class="form-control" placeholder="Enter Team Name" ng-model='newTeam.Name'>
+	            		</div>
+	            		<div class="form-group">        
+	                		<button type="submit" class="btn btn-success" ng-click='addTeam()'>Add New Team</button>
+	            		</div>
+	          		</form>
+	        		<h2>Teams Controller</h2>
+	          		<table class="table table-hover">
+	            		<thead>
+	              			<tr>
+		                		<th>Team Name</th>
+		                		<th>Actions</th>
+	              			</tr>
+	            		</thead>
+	            	<tbody ng-repeat="team in teams">
+	              		<tr>
+	                		<td>{{ team.Name }}</td>
+	                		<td><button type="button" class="btn btn-danger" ng-click='removeTeam(team)'>Remove Team</button></td>
+	              		</tr>
+	            	</tbody>
+	        	</table>
+	    	</div>
+		</div>
+	</div>
+</div>    

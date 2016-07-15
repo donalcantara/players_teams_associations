@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <title></title>
+ <!-- THESE TWO VERSIONS BELOW MUST MATCH!!!! -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
+    
+    <script>
+    //  inject the ngRoute dependency in the module.
+    var myApp = angular.module('myApp', ['ngRoute']);
+    //  use the config method to set up routing:
+      myApp.config(function ($routeProvider) {
+        $routeProvider
+          .when('/',{
+              templateUrl: 'partials/players.html'
+          })
+          .when('/teams',{
+              templateUrl: 'partials/teams.html'
+          })
+          .when('/associations',{
+              templateUrl: 'partials/associations.html'
+          })
+          .otherwise({
+            redirectTo: '/'
+          });
+      });
+      
+      myApp.factory('playerFactory', function (){
+          // The factory is nothing more than a function that returns an object
+        var players = [
+              {Name: 'Alex'}, 
+              {Name: 'Anthony'}, 
+              {Name: 'Willy'}
+        ];
+        var factory = {};
+        // Add a getStudents key to the factory object with a value of a function.
+        factory.getPlayers = function (callback){
+            // Pass the students to a callback to be used by whoever calls the method
+            callback(players);
+        }
+          // Most important step: return the object so it can be used by the rest of our angular code
+        return factory;
+      });
+
+      myApp.factory('teamFactory', function (){
+          // The factory is nothing more than a function that returns an object
+        var teams = [
+              {Name: 'Warriors'}, 
+              {Name: "A's"}, 
+              {Name: 'Niners'}
+        ];
+        var factory = {};
+        // Add a getStudents key to the factory object with a value of a function.
+        factory.getTeams = function (callback){
+            // Pass the students to a callback to be used by whoever calls the method
+            callback(teams);
+        }
+          // Most important step: return the object so it can be used by the rest of our angular code
+        return factory;
+      });
+
+      myApp.factory('assignFactory', function (){
+          // The factory is nothing more than a function that returns an object
+        var assignments = [
+              {Player: 'Rob', Team: "Sixers"} 
+        ];
+        var factory = {};
+        // Add a getStudents key to the factory object with a value of a function.
+        factory.getAssignments = function (callback){
+            // Pass the students to a callback to be used by whoever calls the method
+            callback(assignments);
+        }
+          // Most important step: return the object so it can be used by the rest of our angular code
+        return factory;
+      });
+
+      myApp.controller('associationsController', function ($scope, playerFactory, teamFactory, assignFactory){
+        
+        $scope.teams = [];
+        teamFactory.getTeams(function (data){
+            $scope.teams = data;
+        })
+        $scope.players = [];
+        playerFactory.getPlayers(function (data){
+            $scope.players = data;
+        })
+        $scope.assignments = [];
+        $scope.assignTeam = function(){
+          console.log($scope.newAssignment);
+          $scope.assignments.push($scope.newAssignment);
+          $scope.newAssignment = {};
+        }
+
+        $scope.removeAssignment = function (assignment){
+          $scope.assignments.splice($scope.assignments.indexOf(assignment), 1);
+        }
+      });
+
+      myApp.controller('playersController', function ($scope, playerFactory){
+        
+        $scope.players = [];
+        playerFactory.getPlayers(function (data){
+            $scope.players = data;
+        })
+
+        $scope.addPlayer = function(){
+          $scope.players.push($scope.newPlayer);
+          $scope.newPlayer = {};
+        }
+
+        $scope.removePlayer = function (player){
+          //  indexOf() calculates the index of the item whose value matches what we pass it.  Look it up!
+          $scope.players.splice($scope.players.indexOf(player), 1);
+        }
+      });
+
+      myApp.controller('teamsController', function ($scope, teamFactory){
+        
+        $scope.teams = [];
+        teamFactory.getTeams(function (data){
+            $scope.teams = data;
+        })
+
+        $scope.addTeam = function(){
+          $scope.teams.push($scope.newTeam);
+          $scope.newTeam = {};
+        }
+
+        $scope.removeTeam = function (team){
+          //  indexOf() calculates the index of the item whose value matches what we pass it.  Look it up!
+          $scope.teams.splice($scope.teams.indexOf(team), 1);
+        }
+      });
+    //  build the controllers
+      myApp.controller('view1Controller', function ($scope) {
+      });
+      myApp.controller('view2Controller', function ($scope) {
+      });
+      myApp.controller('view3Controller', function ($scope) {
+      });
+
+    </script>
+  </head>
+
+  <body>
+    <div ng-app='myApp' style="margin-left: 200px;">
+        <h2><a href="#/">Players</a> | <a href="#/teams">Teams</a> | <a href="#/associations">Associations</a></h2>
+        <div ng-view="">
+        </div>
+    </div>
+  </body>
+</html>

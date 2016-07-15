@@ -1,0 +1,42 @@
+<div ng-controller="view3Controller">
+  	<div class="container">
+    	<div class="row">
+      		<div class='col-md-8' ng-controller='associationsController'>
+        		<h2>Associations</h2>
+          		<form class="form-horizontal">
+					<div class="form-group">
+						<label for="sel1">Select Player:</label>
+			  			<select class="form-control" ng-model='newAssignment.Player'>
+			    			<option ng-repeat="player in players">{{ player.Name }}</option>
+			  			</select>
+					</div>
+					<div class="form-group">
+						<label for="sel1">Select Team:</label>
+			  			<select class="form-control" ng-model='newAssignment.Team'>
+			    			<option ng-repeat="team in teams">{{ team.Name }}</option>
+			  			</select>
+					</div>
+            		<div class="form-group">        
+                		<button type="submit" class="btn btn-success" ng-click='assignTeam()'>Assign Player to Team</button>
+            		</div>
+          		</form>
+          		<table class="table table-hover">
+	            	<thead>
+	              		<tr>
+	                	<th>Name</th>
+	                	<th>Teams</th>
+	                	<th></th>
+	              		</tr>
+	            	</thead>
+	            	<tbody ng-repeat="assignment in assignments">
+		              	<tr>
+		                	<td>{{ assignment.Player }}</td>
+		                	<td>{{ assignment.Team }}</td>
+		                	<td><button type="button" class="btn btn-danger" ng-click='removeAssignment(player)'>Clear Assignment</button></td>
+		              	</tr>
+	            	</tbody>
+	          	</table>
+      		</div>
+    	</div>
+    </div>
+</div>
