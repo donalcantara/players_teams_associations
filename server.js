@@ -11,11 +11,11 @@ var app = express();
 var path = require("path");
 // Require body-parser (to receive post data from clients)
 var bodyParser = require("body-parser");
-// Integrate body-parser with our App
+// Integrate body-parser with App
 app.use(bodyParser.urlencoded());
-// Setting our Static Folder Directory
+// Setting Static Folder Directory
 app.use(express.static(path.join(__dirname, "./static")));
-// Setting our Views Folder Directory
+// Setting Views Folder Directory
 
 app.get('/', function(req, res) {
     res.render('index');
